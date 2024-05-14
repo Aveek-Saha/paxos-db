@@ -1,0 +1,26 @@
+version: "3"
+
+name: project4
+
+services:
+    coordinator:
+        build:
+            context: .
+            dockerfile: server.Dockerfile
+        entrypoint: java -jar /app/server.jar c 5000
+        ports:
+            - "5000:5000"
+
+    server:
+        build:
+            context: .
+            dockerfile: server.Dockerfile
+        depends_on:
+            coordinator:
+                condition: service_started
+        entrypoint: java -jar /app/server.jar coordinator 5000 5001 5
+        ports:
+            - target: 5001
+        deploy: 
+          mode: replicated
+          replicas : 5

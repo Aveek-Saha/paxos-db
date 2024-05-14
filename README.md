@@ -69,29 +69,3 @@ server:
         - target: <server port>
     ...
 ```
-
-## Screenshots
-
-### Servers
-
-**Acceptor Randomly failing and picking a new proposal number to retry:**
-
-![Backend 1](./img/backend_1.png)
-
-**A successful proposal for a put operation:**
-
-![Backend 2](./img/backend_2.png)
-
-**The proposer and acceptor for same put operation:**
-
-![Backend 3](./img/backend_3.png)
-
-### Clients
-
-**Client running predefined operations:**
-
-![Client 1](./img/Client_1.png)
-
-**Running custom commands on client, also showing invalid commands:**
-
-![Client 2](./img/Client_2.png)

@@ -1,16 +1,28 @@
-# Project 4
+# Paxos Db
 
-There are two folders `client` and `server` containing the client and server respectively. These are two separate Java programs and need to be compiled separately
+A replicated key value store that achieves consensus using multi-paxos.
+
+## Features
+
+- Three types of operations can be performed on the server with the following parameters:
+    - PUT (key, value) 
+    - GET (key) 
+    - DELETE (key) 
+- These operations are performed on a key value store.
+- Server is multi threaded and can respond to multiple clients at a time. 
+- Client and servers communicate using RPC.
+- The server is replicated across multiple instances.
+- Replicas should be fault tolerant.
+- Paxos is used for fault tolerant consensus.
+- Replicas implement Paxos roles like the Proposers,  Acceptors, and Learners.
+- Clients can sent requests to any of the replicas.
+- Only the replica that receives a client becomes the proposer for that round of paxos.
+- A coordinator is present only for facilitating the discovery of all replicas. 
+
 
 ## Running instructions
 
-The project uses `maven` so to build it on your system you will need maven installed. If you use IntelliJ it should be already installed and you can install the package from the GUI.
-
-The project has one dependency on an external library: `org.JSON`. This jar package needs to be installed using Maven before the code will compile.
-
-Since this Project uses RMI your machine must be able set up for that as well.
-
-This project MUST be run with `Docker` or `Docker Compose` which will create a coordinator and the specified number of server replicas.
+The project uses `maven` for building. This project MUST be run with `Docker` or `Docker Compose` which will create a coordinator and the specified number of server replicas.
 
 ### Run with Docker
 Docker can be used along with the shell scripts.

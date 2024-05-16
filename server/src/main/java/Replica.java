@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -229,10 +228,6 @@ public class Replica extends UnicastRemoteObject implements ReplicaInterface {
         try {
             ServerLogger.logInfo("Received prepare request from: " + RemoteServer.getClientHost());
 
-            if (emulateFailure(FAILURE_THRESHOLD)) {
-                return null;
-            }
-
             JSONObject request = new JSONObject(requestStr);
             long proposalNumber = request.getLong("proposalNumber");
             //int instanceNumber = request.getInt("instanceNumber");
@@ -271,10 +266,6 @@ public class Replica extends UnicastRemoteObject implements ReplicaInterface {
         try {
             ServerLogger.logInfo("Received accept request from: " + RemoteServer.getClientHost());
 
-            if (emulateFailure(FAILURE_THRESHOLD)) {
-                return null;
-            }
-
             JSONObject request = new JSONObject(requestStr);
             long proposalNumber = request.getLong("proposalNumber");
             //int instanceNumber = request.getInt("instanceNumber");
@@ -297,24 +288,6 @@ public class Replica extends UnicastRemoteObject implements ReplicaInterface {
         } finally {
             lock.unlock();
         }
-    }
-
-    /**
-     * Simulates communication failures by generating a random number and comparing it with a
-     * specified threshold.
-     *
-     * @param threshold The threshold value for determining failure probability (between 0 and 1).
-     * @return `true` if a failure is emulated, `false` otherwise.
-     */
-    private boolean emulateFailure(double threshold) {
-        Random random = new Random();
-        // Generate a random number between 0 and 1
-        double randomNumber = random.nextDouble();
-        if (randomNumber < threshold) {
-            ServerLogger.logWarning("Emulating communication failure");
-            return true;
-        }
-        return false;
     }
 
     /**
